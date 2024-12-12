@@ -1,6 +1,7 @@
 // "use strit";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 // these are two import syntax
 const pizzaData = [
   {
@@ -48,21 +49,69 @@ const pizzaData = [
 ];
 function App() {
   return (
-    <div>
-      <h1>Hello Alan</h1>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+    <div className="container">
+      <h1>Welcome Dear Customer</h1>
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
-function Pizza() {
+function Header() {
   return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h2>Pizza Dominos</h2>
-      <p>Tomato, mozarella, and pepperoni</p>
+    <header className="header">
+      <h1>Fast react Pizza Co.</h1>
+    </header>
+  );
+}
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <div>
+        <ul className="pizzas">
+          {pizzaData.map((pizzaData) => (
+            <Pizza pizzaObj={pizzaData} key={pizzaData.name} />
+          ))}
+        </ul>
+      </div>
+    </main>
+  );
+}
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img
+        className="pizzamain"
+        src={props.pizzaObj.photoName}
+        alt={props.pizzaObj.name}
+      />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price + 3}</span>
+        <span>{props.pizzaObj.soldOut ? "SoldOut" : ""}</span>
+      </div>
     </div>
+  );
+}
+function Footer() {
+  const hour = new Date().getHours();
+  const openHours = 12;
+  const closedHours = 24;
+  const isOpen = hour >= openHours && hour <= closedHours;
+
+  return (
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>
+            We're open until {closedHours}:00. Come visit us or order online!
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
   );
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
