@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { PizzaType } from "./types"; // Import TypeScript types
 import { pizzaData } from "./data"; // Import Pizza data
 import "./index.css"; // Importing styles
-
+import "./output.css";
 // Header Component
 export function App() {
   return (
@@ -41,7 +41,6 @@ export function Footer() {
         </div>
       ) : (
         <p>
-          {" "}
           We are happy to welcome you between{openHours}:00{closedHours}:00
         </p>
       )}
@@ -56,20 +55,16 @@ type pizzaProps = {
 //we can use if condtions for early returns if the condition does match ;
 //ex:
 export function Pizza({ pizzaObj }: pizzaProps) {
-  if (pizzaObj.soldOut) return null; // null yozishni esdan chqarma mazgi bolmasa undefined qaytaradi return o'zi
+  // if (pizzaObj.soldOut) return null; // null yozishni esdan chqarma mazgi bolmasa undefined qaytaradi return o'zi
   return (
-    <div className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img className="pizza-img" src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
         <h3>{pizzaObj.name}</h3>
         <p>{pizzaObj.ingredients}</p>
-        {pizzaObj.soldOut ? (
-          <span className="sold-out">Sold Out</span>
-        ) : (
-          <span className="price">${pizzaObj.price}</span>
-        )}
+        <span>{pizzaObj.soldOut ? "sold-out" : pizzaObj.price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -78,7 +73,7 @@ export function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <h1 className="text-4xl text-blue-500">
+      <h1 className="text-4xl text-red-600">
         Tailwind CSS is working in React!
       </h1>
 
